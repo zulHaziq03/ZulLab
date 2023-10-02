@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Vigenere Cipher Decryption</title>
+        <style>
+                body {
+            background-image: url('apple.png');
+           
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(247, 247, 247);
+            height: 650px;
+            border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #input-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #input-container input, ::placeholder {
+            margin-bottom: 20px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #result {
+            position: absolute;
+            top: 90%;
+            transition: 0.3s;
+            background: white;
+            height: 30px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            background: orange;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #button {
+            background: #faaf40;
+            height: 40px;
+            border-radius: 7px;
+            border: #d0be90 solid 1.5px;
+            cursor: pointer;
+            font: Arial;
+        }
+
+        #button:hover {
+            background: #ffbb56;
+        }
+
+        #button:hover #icon {
+            transform: translate(10px);
+        }
+
+        #image {
+            border-radius: 40%;
+            position: absolute;
+            top: 0%;
+            left: 27%;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="input-container">
+                <h1>Vigenere Cipher Decryption</h1>
+                <img src="logokypj.png" id="image" width="160">
+                <input type="text" id="cipher-input" placeholder="Ciphertext">
+                <input type="text" id="key-input" placeholder="Key">
+                <button id="button">Decrypt <i class="fas fa-arrow-alt-circle-right" id="icon"></i></button>
+                <p style="font-family: 'Courier New', Courier, monospace;">Programmed by Zulhaziq</p>
+                <a href="Ciphertxt.html"><button>Cipher>>> </button></a>
+            </div>
+            <input id="result" disabled value="Decrypted text will appear here...">
+        </div>
+        <script>
+            let button = document.getElementById('button');
+            let cipherInput = document.getElementById('cipher-input');
+            let keyInput = document.getElementById('key-input');
+            let display = document.getElementById('result');
+
+            function decryptVigenere(key, ciphertext) {
+                // Check if either the ciphertext or key is empty
+                if (ciphertext === '' || key === '') {
+                    alert('Please enter both the ciphertext and the key.');
+                    return;
+                }
+
+                // Convert the key and ciphertext to uppercase
+                key = key.toUpperCase();
+                ciphertext = ciphertext.toUpperCase();
+
+                let decryptedText = '';
+
+                for (let i = 0; i < ciphertext.length; i++) {
+                    const ciphertextChar = ciphertext[i];
+                    const keyChar = key[i % key.length];
+
+                    if (ciphertextChar === ' ') {
+                        decryptedText += ' ';
+                    } else {
+                        const ciphertextCharCode = ciphertextChar.charCodeAt(0) - 65;
+                        const keyCharCode = keyChar.charCodeAt(0) - 65;
+                        const decryptedCharCode = ((ciphertextCharCode - keyCharCode + 26) % 26) + 65;
+                        const decryptedChar = String.fromCharCode(decryptedCharCode);
+                        decryptedText += decryptedChar;
+                    }
+                }
+
+                display.value = decryptedText;
+            }
+
+            button.onclick = () => {
+                decryptVigenere(keyInput.value, cipherInput.value);
+            };
+        </script>
+    </body>
+</html>
+

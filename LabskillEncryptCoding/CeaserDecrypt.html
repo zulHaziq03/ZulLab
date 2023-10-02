@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Caesar Cipher Decryption</title>
+    <style>
+        body {
+            background-image: url('apple.png');
+           
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(247, 247, 247);
+            height: 650px;
+            border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #input-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #input-container input, ::placeholder {
+            margin-bottom: 20px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #result {
+            position: absolute;
+            top: 90%;
+            transition: 0.3s;
+            background: white;
+            height: 30px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            background: orange;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #button {
+            background: #faaf40;
+            height: 40px;
+            border-radius: 7px;
+            border: #d0be90 solid 1.5px;
+            cursor: pointer;
+            font: Arial;
+        }
+
+        #button:hover {
+            background: #ffbb56;
+        }
+
+        #button:hover #icon {
+            transform: translate(10px);
+        }
+
+        #image {
+            border-radius: 40%;
+            position: absolute;
+            top: 0%;
+            left: 27%;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="input-container">
+        <h1>Caesar Cipher Decryption</h1>
+        <img src="logokypj.png" id="image" width="160">
+        <input type="text" id="cipher-input" placeholder="Ciphertext"> <!-- Changed ID to "cipher-input" -->
+        <input type="number" id="shift-input" placeholder="Shift">
+        <button id="button">Decrypt <i class="fas fa-arrow-alt-circle-right" id="icon"></i></button> <!-- Changed button text to "Decrypt" -->
+        <p style="font-family: 'Courier New', Courier, monospace;">Programed by Zulhaziq</p>
+    </div>
+    <input id="result" disabled value="Result will appear here...">
+</div>
+
+<script>
+    let button = document.getElementById('button');
+    let cipherInput = document.getElementById('cipher-input'); // Changed variable name
+    let shiftInput = document.getElementById('shift-input');
+    let display = document.getElementById('result');
+
+    function decryptCaesar(cipher, shift) { // Changed function name
+        if (!cipher || shift === "") {
+            alert("Please enter the Ciphertext and Shift.");
+            return;
+        }
+
+        let result = '';
+
+        for (let i = 0; i < cipher.length; i++) {
+            let charCode = cipher.charCodeAt(i);
+
+            if (charCode >= 65 && charCode <= 90) { // Uppercase letters
+                result += String.fromCharCode(((charCode - 65 - shift + 26) % 26) + 65); // Modified decryption formula
+            } else if (charCode >= 97 && charCode <= 122) { // Lowercase letters
+                result += String.fromCharCode(((charCode - 97 - shift + 26) % 26) + 97); // Modified decryption formula
+            } else {
+                result += cipher[i]; // Keep non-alphabet characters as is
+            }
+        }
+
+        display.value = result;
+    }
+
+    button.onclick = () => {
+        decryptCaesar(cipherInput.value, parseInt(shiftInput.value));
+    };
+</script>
+</body>
+</html>
